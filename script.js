@@ -4,7 +4,7 @@ window.onload = function () {
 
 initiallise = function () {
     salt = "code-quality";
-    X = 0;
+    X = 1;
     window.iterator = 0;
     result = new Array(10);
 
@@ -14,7 +14,7 @@ initiallise = function () {
 };
 
 function calculateHash() {
-    while (result.isComplete() == false) {
+    while (result.isComplete == false) {
         iterator++;
         let saltI = salt + iterator;
         let hash = md5(saltI);
@@ -24,7 +24,7 @@ function calculateHash() {
 
         let index = hash[X];
 
-        if (index.isDigit() == false)
+        if (index.isDigit == false)
             continue;
 
         if (result.hasValueAt(index))
@@ -38,21 +38,25 @@ function calculateHash() {
     console.log(result.join(''));
 }
 
-Array.prototype.isComplete = function () {
-    for (var i = 0; i < result.length; i++) {
-        if (result[i] == null)
-            return false;
-    };
-    return true;
-};
+Object.defineProperties(Array.prototype, {
+    isComplete: {
+        get: function () {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == null)
+                    return false;
+            };
+            return true;
+        }
+    }
+});
 
 String.prototype.startsWithZeros = function (x) {
     return this.startsWith('0'.repeat(x));
 };
 
-String.prototype.isDigit = function () {
-    return this.length == 1 && isNaN(this) == false;
-};
+Object.defineProperties(String.prototype, {
+    isDigit: { get: function () { return this.length == 1 && isNaN(this) == false; } }
+});
 
 Array.prototype.hasValueAt = function (ind) {
     return this[ind] != null;
