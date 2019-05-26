@@ -4,12 +4,10 @@ window.onload = function () {
 
 function calculateHash() {
 
-    while (isComplete() == false) { //Todo: result.isComplete()
+    while (result.isComplete() == false) {
         i++;
         let saltI = salt + i;
         let hash = md5(saltI);
-        console.log(hash);
-        // let md5 = "000045eeb68e49d94edb7c6faf93b301"
 
         if (hash.startsWithZeros(X) == false)
             continue;
@@ -27,12 +25,12 @@ function calculateHash() {
         result.setValueAt(index, value);
     }
 
-    console.log(result);
+    console.log(result.join(''));
 }
 
 initiallise = function () {
     salt = "code-quality";
-    X = 3;
+    X = 0;
     window.i = 0;
     result = new Array(10);
 
@@ -41,7 +39,7 @@ initiallise = function () {
     };
 };
 
-isComplete = function () {
+Array.prototype.isComplete = function () {
     for (var i = 0; i < result.length; i++) {
         if (result[i] == null)
             return false;
