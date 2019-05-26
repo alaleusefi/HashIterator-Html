@@ -2,11 +2,21 @@ window.onload = function () {
     initiallise();
 }
 
-function calculateHash() {
+initiallise = function () {
+    salt = "code-quality";
+    X = 0;
+    window.iterator = 0;
+    result = new Array(10);
 
+    for (var i = 0; i < result.length; i++) {
+        result[i] = null;
+    };
+};
+
+function calculateHash() {
     while (result.isComplete() == false) {
-        i++;
-        let saltI = salt + i;
+        iterator++;
+        let saltI = salt + iterator;
         let hash = md5(saltI);
 
         if (hash.startsWithZeros(X) == false)
@@ -20,24 +30,13 @@ function calculateHash() {
         if (result.hasValueAt(index))
             continue;
 
-        let value = hash[i % 32];
+        let value = hash[iterator % 32];
 
         result.setValueAt(index, value);
     }
 
     console.log(result.join(''));
 }
-
-initiallise = function () {
-    salt = "code-quality";
-    X = 0;
-    window.i = 0;
-    result = new Array(10);
-
-    for (var i = 0; i < result.length; i++) {
-        result[i] = null;
-    };
-};
 
 Array.prototype.isComplete = function () {
     for (var i = 0; i < result.length; i++) {
